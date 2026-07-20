@@ -375,8 +375,8 @@ section { padding: 72px 0; }
 }
 
 /* Flip cards (homepage) */
-.flip-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 14px; }
-.flip-card { display: block; perspective: 1200px; height: 190px; }
+.flip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.flip-card { display: block; perspective: 1200px; height: 240px; }
 .flip-card-inner {
   position: relative; width: 100%; height: 100%;
   transition: transform 0.5s;
@@ -400,13 +400,13 @@ section { padding: 72px 0; }
   background: linear-gradient(180deg, rgba(10,26,61,0.15) 0%, rgba(10,26,61,0.85) 100%);
   z-index: 1;
 }
-.flip-front span { font-weight: 700; font-size: 0.92rem; line-height: 1.25; position: relative; z-index: 2; }
+.flip-front span { font-weight: 700; font-size: 1.05rem; line-height: 1.25; position: relative; z-index: 2; }
 .flip-back {
   background: #fff; transform: rotateY(180deg);
   justify-content: center; text-align: left;
 }
-.flip-back p { font-size: 0.78rem; color: var(--c-ink-soft); margin-bottom: 10px; }
-.flip-back a, .flip-back .flip-explore { font-size: 0.78rem; font-weight: 700; color: var(--c-teal-600); }
+.flip-back p { font-size: 0.86rem; color: var(--c-ink-soft); margin-bottom: 10px; }
+.flip-back a, .flip-back .flip-explore { font-size: 0.86rem; font-weight: 700; color: var(--c-teal-600); }
 
 /* ---------------------------------------------------------------------- */
 /* Spec tables                                                            */
@@ -517,7 +517,7 @@ tr.row-flagship td { background: var(--c-gold-100); }
 .logo-chip {
   border: 1px solid var(--c-line);
   border-radius: var(--radius-sm);
-  padding: 24px 18px;
+  padding: 10px;
   text-align: center;
   font-weight: 700;
   color: var(--c-ink-soft);
@@ -529,7 +529,7 @@ tr.row-flagship td { background: var(--c-gold-100); }
 }
 .logo-chip:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
 .logo-chip img {
-  max-height: 64px;
+  max-height: 92px;
   max-width: 100%;
   width: auto;
 }
@@ -540,7 +540,7 @@ tr.row-flagship td { background: var(--c-gold-100); }
   padding: 18px 20px;
   background: var(--c-bg-alt);
 }
-.investor-chip img { height: 44px; width: auto; flex-shrink: 0; }
+.investor-chip img { height: 88px; width: auto; flex-shrink: 0; }
 .investor-chip p { margin: 0; font-size: 0.82rem; color: var(--c-ink-soft); }
 .investor-chip h4 { margin: 0 0 4px; }
 
@@ -595,7 +595,7 @@ tr.row-flagship td { background: var(--c-gold-100); }
 .cert-modal-content {
   position: relative;
   background: #fff; border-radius: var(--radius-md);
-  max-width: 520px; width: 100%; padding: 32px;
+  max-width: min(1040px, 94vw); width: 100%; padding: 32px;
   text-align: center; box-shadow: var(--shadow-lg);
 }
 .cert-modal-close {
@@ -606,12 +606,17 @@ tr.row-flagship td { background: var(--c-gold-100); }
 }
 .cert-modal-close:hover { background: var(--c-line-soft); }
 .cert-modal-image {
-  aspect-ratio: 3/4; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
   overflow: hidden; margin-bottom: 18px; background: var(--c-bg-alt);
 }
-.cert-modal-image img { width: 100%; height: 100%; object-fit: contain; }
+.cert-modal-image img {
+  display: block; width: auto; height: auto;
+  max-width: 100%; max-height: 76vh; object-fit: contain;
+}
 .cert-placeholder {
-  height: 100%; display: flex; flex-direction: column;
+  width: 100%; min-height: 320px; box-sizing: border-box;
+  display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 10px;
   border: 1.5px dashed var(--c-line); border-radius: var(--radius-sm);
   color: var(--c-ink-soft);
