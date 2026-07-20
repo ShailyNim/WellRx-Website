@@ -88,15 +88,17 @@
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(24, 160, 152, 0); }
   }
 
-  /* Custom Dark Tooltip */
-  .leaflet-popup-content-wrapper {
+  /* Custom Dark Tooltip (hover-triggered) */
+  .leaflet-tooltip.wellrx-map-tooltip {
     background: #0F3286 !important;
     color: #ffffff !important;
     border: 1px solid #18A098;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    padding: 10px 12px;
+    opacity: 1 !important;
   }
-  .leaflet-popup-tip { background: #0F3286 !important; }
+  .leaflet-tooltip-top.wellrx-map-tooltip::before { border-top-color: #0F3286 !important; }
   .wellrx-popup-title { font-weight: bold; color: #1AD1A5; font-size: 16px; margin-bottom: 4px; }
   .wellrx-popup-list { margin: 0; padding-left: 16px; font-size: 13px; color: #E6F5F4; }
 </style>
@@ -236,13 +238,17 @@
       });
 
       var clientListHtml = item.clients.map(function (c) { return '<li>' + c + '</li>'; }).join('');
-      var popupContent =
+      var tooltipContent =
         '<div class="wellrx-popup-title">' + item.country + '</div>' +
         '<ul class="wellrx-popup-list">' + clientListHtml + '</ul>';
 
       L.marker([item.lat, item.lng], { icon: customIcon })
         .addTo(map)
-        .bindPopup(popupContent);
+        .bindTooltip(tooltipContent, {
+          direction: 'top',
+          offset: [0, -10],
+          className: 'wellrx-map-tooltip'
+        });
     });
   }
 </script>
