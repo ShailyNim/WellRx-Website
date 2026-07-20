@@ -6,6 +6,7 @@
 <title>Partners &amp; Clients — WellRx Technologies</title>
 <meta name="description" content="Investors and clients backing WellRx Technologies.">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -55,6 +56,50 @@
     <p class="hero-lede">Investors and clients — two distinct signals, shown separately.</p>
   </div>
 </section>
+
+<section>
+  <div class="container">
+    <div class="section-head"><h2>Global Footprint</h2><p>WellRx equipment is deployed with operators and NOCs/IOCs across 17 countries — click a marker to see the clients in that region.</p></div>
+    <div id="wellrx-global-map" style="width: 100%; height: 550px; background-color: #0A1A40; border-radius: 12px; position: relative; margin-bottom:48px;"></div>
+  </div>
+</section>
+
+<style>
+  /* Custom Glowing Teal Pins. The pulse animation lives on an inner <span>,
+     not the Leaflet-positioned wrapper div, since a CSS animation on
+     `transform` replaces the wrapper's inline translate3d() positioning
+     rather than composing with it — putting it here would collapse every
+     marker onto the same spot. */
+  .wellrx-pin-wrap { background: transparent; border: none; }
+  .wellrx-map-pin {
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: #18A098;
+    border: 2px solid #E6F5F4;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #18A098, 0 0 20px #1AD1A5;
+    animation: pulseGlow 2s infinite ease-in-out;
+  }
+
+  @keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(24, 160, 152, 0.7); }
+    70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(24, 160, 152, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(24, 160, 152, 0); }
+  }
+
+  /* Custom Dark Tooltip */
+  .leaflet-popup-content-wrapper {
+    background: #0F3286 !important;
+    color: #ffffff !important;
+    border: 1px solid #18A098;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .leaflet-popup-tip { background: #0F3286 !important; }
+  .wellrx-popup-title { font-weight: bold; color: #1AD1A5; font-size: 16px; margin-bottom: 4px; }
+  .wellrx-popup-list { margin: 0; padding-left: 16px; font-size: 13px; color: #E6F5F4; }
+</style>
 
 <section>
   <div class="container">
@@ -145,5 +190,61 @@
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var wellrxMapEl = document.getElementById('wellrx-global-map');
+  if (wellrxMapEl && window.L) {
+    var map = L.map('wellrx-global-map', {
+      center: [20.0, 20.0],
+      zoom: 2,
+      zoomControl: true,
+      scrollWheelZoom: false
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; WellRx Technologies',
+      subdomains: 'abcd',
+      maxZoom: 6,
+      minZoom: 2
+    }).addTo(map);
+
+    var clientData = [
+      { "country": "India", "lat": 20.5937, "lng": 78.9629, "clients": ["ONGC", "Oil India", "Cairn", "Reliance", "IOCL", "Selan", "GNRL"] },
+      { "country": "United Arab Emirates", "lat": 23.4241, "lng": 53.8478, "clients": ["ADNOC"] },
+      { "country": "Saudi Arabia", "lat": 23.8859, "lng": 45.0792, "clients": ["Saudi Aramco"] },
+      { "country": "Oman", "lat": 21.5126, "lng": 55.9233, "clients": ["PDO", "Daleel Petroleum", "ARA Petroleum"] },
+      { "country": "Qatar", "lat": 25.3548, "lng": 51.1839, "clients": ["QatarEnergy (QP)"] },
+      { "country": "Kuwait", "lat": 29.3117, "lng": 47.4818, "clients": ["Kuwait Oil Company (KOC)"] },
+      { "country": "Australia", "lat": -25.2744, "lng": 133.7751, "clients": ["Woodside Energy"] },
+      { "country": "United States", "lat": 37.0902, "lng": -95.7129, "clients": ["Occidental (Oxy)", "Halliburton", "Weatherford", "Shell"] },
+      { "country": "United Kingdom", "lat": 55.3781, "lng": -3.4360, "clients": ["BP"] },
+      { "country": "Indonesia", "lat": -0.7893, "lng": 113.9213, "clients": ["Pertamina", "MedcoEnergi"] },
+      { "country": "Malaysia", "lat": 4.2105, "lng": 101.9758, "clients": ["Genting Energy"] },
+      { "country": "Vietnam", "lat": 14.0583, "lng": 108.2772, "clients": ["Vietsovpetro"] },
+      { "country": "Azerbaijan", "lat": 40.1431, "lng": 47.5769, "clients": ["SOCAR"] },
+      { "country": "Gabon", "lat": -0.8037, "lng": 11.6094, "clients": ["Gabon Oil Company"] },
+      { "country": "Nigeria", "lat": 9.0820, "lng": 8.6753, "clients": ["Sterling Oil (SEEPCO)"] },
+      { "country": "Mexico", "lat": 23.6345, "lng": -102.5528, "clients": ["Pemex"] },
+      { "country": "New Zealand", "lat": -40.9006, "lng": 174.8860, "clients": ["Mercury Energy"] }
+    ];
+
+    clientData.forEach(function (item) {
+      var customIcon = L.divIcon({
+        className: 'wellrx-pin-wrap',
+        html: '<span class="wellrx-map-pin"></span>',
+        iconSize: [14, 14]
+      });
+
+      var clientListHtml = item.clients.map(function (c) { return '<li>' + c + '</li>'; }).join('');
+      var popupContent =
+        '<div class="wellrx-popup-title">' + item.country + '</div>' +
+        '<ul class="wellrx-popup-list">' + clientListHtml + '</ul>';
+
+      L.marker([item.lat, item.lng], { icon: customIcon })
+        .addTo(map)
+        .bindPopup(popupContent);
+    });
+  }
+</script>
 </body>
 </html>
