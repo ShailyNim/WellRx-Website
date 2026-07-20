@@ -6,7 +6,7 @@
 <title>Clients — WellRx Technologies</title>
 <meta name="description" content="WellRx Technologies clients and global footprint, across 17 countries.">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.7.0/dist/jsvectormap.min.css" />
 </head>
 <body>
 
@@ -53,54 +53,73 @@
   <div class="container hero-inner hero-page">
     <div class="eyebrow">Clients</div>
     <h1>Groundup technology with Global Footprint</h1>
-    <p class="hero-lede">Trusted by national and international operators across 17 countries.</p>
+    <p class="hero-lede">Trusted by national and international operators across 45 countries.</p>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="section-head"><h2>Global Footprint</h2><p>WellRx equipment is deployed with operators and NOCs/IOCs across 17 countries — hover a marker to see the clients in that region.</p></div>
-    <div id="wellrx-global-map" style="width: 100%; height: 550px; background-color: #0A1A40; border-radius: 12px; position: relative; margin-bottom:16px;"></div>
+    <div class="section-head"><h2>Global Footprint</h2><p>WellRx equipment and technology reach operators and NOCs/IOCs across 45 countries — hover a highlighted country or pin to see its name.</p></div>
+    <div id="wellrx-global-map" style="width: 100%; height: 550px; background-color: #0A1A40; border-radius: 12px; position: relative; overflow: hidden; margin-bottom:16px;"></div>
   </div>
 </section>
 
 <style>
-  /* Custom Glowing Teal Pins. The pulse animation lives on an inner <span>,
-     not the Leaflet-positioned wrapper div, since a CSS animation on
-     `transform` replaces the wrapper's inline translate3d() positioning
-     rather than composing with it — putting it here would collapse every
-     marker onto the same spot. */
-  .wellrx-pin-wrap { background: transparent; border: none; }
-  .wellrx-map-pin {
-    display: block;
-    width: 14px;
-    height: 14px;
-    background-color: #18A098;
-    border: 2px solid #E6F5F4;
-    border-radius: 50%;
-    box-shadow: 0 0 12px #18A098, 0 0 20px #1AD1A5;
-    animation: pulseGlow 2s infinite ease-in-out;
+  /* World map: dark industrial theme — highlighted-country polygons + glowing pulse pins.
+     `.wellrx-active-region` is added to the matching `.jvm-region` path in the onLoaded
+     callback below, for every code in the WELLRX_COUNTRIES list, so region + pin styling
+     stay driven from that single JS list. */
+  #wellrx-global-map .jvm-container { touch-action: none; }
+  .jvm-region { cursor: default; }
+
+  .jvm-region.wellrx-active-region {
+    fill: #18A098;
+    fill-opacity: 0.3;
+    cursor: pointer;
+    transition: fill-opacity 0.25s ease;
+  }
+  .jvm-region.wellrx-active-region:hover { fill-opacity: 0.8; }
+
+  /* Pulse pins: a static teal dot marker per country, plus a paired "__ring" marker
+     at the same coordinates that expands and fades — the radar-pulse effect. */
+  .jvm-marker { cursor: pointer; }
+  .jvm-marker:not([data-index$="__ring"]) {
+    filter: drop-shadow(0 0 4px rgba(24, 160, 152, 0.85));
+  }
+  .jvm-marker[data-index$="__ring"] {
+    pointer-events: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: wellrxPulseRing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @keyframes wellrxPulseRing {
+    0%   { transform: scale(1); opacity: 0.85; }
+    80%  { opacity: 0; }
+    100% { transform: scale(3.4); opacity: 0; }
   }
 
-  @keyframes pulseGlow {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(24, 160, 152, 0.7); }
-    70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(24, 160, 152, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(24, 160, 152, 0); }
+  /* Minimal dark tooltip — country name (+ flag) only, no other detail. */
+  :root {
+    --jvm-tooltip-bg-color: rgba(15, 23, 42, 0.92);
+    --jvm-tooltip-color: #E6F5F4;
+    --jvm-tooltip-radius: 8px;
+    --jvm-tooltip-padding: 8px 14px;
+    --jvm-tooltip-font-size: 0.85rem;
+    --jvm-tooltip-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --jvm-zoom-btn-bg-color: rgba(15, 23, 42, 0.85);
+    --jvm-zoom-btn-color: #18A098;
+  }
+  .jvm-tooltip {
+    border: 1px solid rgba(24, 160, 152, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    font-weight: 600;
+    letter-spacing: 0.01em;
   }
 
-  /* Custom Dark Tooltip (hover-triggered) */
-  .leaflet-tooltip.wellrx-map-tooltip {
-    background: #0F3286 !important;
-    color: #ffffff !important;
-    border: 1px solid #18A098;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    padding: 10px 12px;
-    opacity: 1 !important;
+  @media (max-width: 620px) {
+    #wellrx-global-map { height: 380px !important; }
   }
-  .leaflet-tooltip-top.wellrx-map-tooltip::before { border-top-color: #0F3286 !important; }
-  .wellrx-popup-title { font-weight: bold; color: #1AD1A5; font-size: 16px; margin-bottom: 4px; }
-  .wellrx-popup-list { margin: 0; padding-left: 16px; font-size: 13px; color: #E6F5F4; }
 </style>
 
 <section>
@@ -181,65 +200,135 @@
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.7.0/dist/jsvectormap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.7.0/dist/maps/world-merc.js"></script>
 <script>
-  var wellrxMapEl = document.getElementById('wellrx-global-map');
-  if (wellrxMapEl && window.L) {
-    var map = L.map('wellrx-global-map', {
-      center: [20.0, 20.0],
-      zoom: 2,
-      zoomControl: true,
-      scrollWheelZoom: false
-    });
+(function () {
+  var mapEl = document.getElementById('wellrx-global-map');
+  if (!mapEl || !window.jsVectorMap) return;
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; WellRx Technologies',
-      subdomains: 'abcd',
-      maxZoom: 6,
-      minZoom: 2
-    }).addTo(map);
-
-    var clientData = [
-      { "country": "India", "lat": 20.5937, "lng": 78.9629, "clients": ["ONGC", "Oil India", "Cairn", "Reliance", "IOCL", "Selan", "GNRL"] },
-      { "country": "United Arab Emirates", "lat": 23.4241, "lng": 53.8478, "clients": ["ADNOC"] },
-      { "country": "Saudi Arabia", "lat": 23.8859, "lng": 45.0792, "clients": ["Saudi Aramco"] },
-      { "country": "Oman", "lat": 21.5126, "lng": 55.9233, "clients": ["PDO", "Daleel Petroleum", "ARA Petroleum"] },
-      { "country": "Qatar", "lat": 25.3548, "lng": 51.1839, "clients": ["QatarEnergy (QP)"] },
-      { "country": "Kuwait", "lat": 29.3117, "lng": 47.4818, "clients": ["Kuwait Oil Company (KOC)"] },
-      { "country": "Australia", "lat": -25.2744, "lng": 133.7751, "clients": ["Woodside Energy"] },
-      { "country": "United States", "lat": 37.0902, "lng": -95.7129, "clients": ["Occidental (Oxy)", "Halliburton", "Weatherford", "Shell"] },
-      { "country": "United Kingdom", "lat": 55.3781, "lng": -3.4360, "clients": ["BP"] },
-      { "country": "Indonesia", "lat": -0.7893, "lng": 113.9213, "clients": ["Pertamina", "MedcoEnergi"] },
-      { "country": "Malaysia", "lat": 4.2105, "lng": 101.9758, "clients": ["Genting Energy"] },
-      { "country": "Vietnam", "lat": 14.0583, "lng": 108.2772, "clients": ["Vietsovpetro"] },
-      { "country": "Azerbaijan", "lat": 40.1431, "lng": 47.5769, "clients": ["SOCAR"] },
-      { "country": "Gabon", "lat": -0.8037, "lng": 11.6094, "clients": ["Gabon Oil Company"] },
-      { "country": "Nigeria", "lat": 9.0820, "lng": 8.6753, "clients": ["Sterling Oil (SEEPCO)"] },
-      { "country": "Mexico", "lat": 23.6345, "lng": -102.5528, "clients": ["Pemex"] },
-      { "country": "New Zealand", "lat": -40.9006, "lng": 174.8860, "clients": ["Mercury Energy"] }
-    ];
-
-    clientData.forEach(function (item) {
-      var customIcon = L.divIcon({
-        className: 'wellrx-pin-wrap',
-        html: '<span class="wellrx-map-pin"></span>',
-        iconSize: [14, 14]
-      });
-
-      var clientListHtml = item.clients.map(function (c) { return '<li>' + c + '</li>'; }).join('');
-      var tooltipContent =
-        '<div class="wellrx-popup-title">' + item.country + '</div>' +
-        '<ul class="wellrx-popup-list">' + clientListHtml + '</ul>';
-
-      L.marker([item.lat, item.lng], { icon: customIcon })
-        .addTo(map)
-        .bindTooltip(tooltipContent, {
-          direction: 'top',
-          offset: [0, -10],
-          className: 'wellrx-map-tooltip'
-        });
+  // Two-letter ISO code -> flag emoji, via the regional-indicator-symbol trick.
+  function flagOf(code) {
+    return code.toUpperCase().replace(/./g, function (c) {
+      return String.fromCodePoint(127397 + c.charCodeAt(0));
     });
   }
+
+  var WELLRX_COUNTRIES = [
+    { code: 'PH', name: 'Philippines', coords: [12.8797, 121.7740] },
+    { code: 'TH', name: 'Thailand', coords: [15.8700, 100.9925] },
+    { code: 'CN', name: 'China', coords: [35.8617, 104.1954] },
+    { code: 'VN', name: 'Vietnam', coords: [14.0583, 108.2772] },
+    { code: 'RU', name: 'Russia', coords: [61.5240, 105.3188] },
+    { code: 'KZ', name: 'Kazakhstan', coords: [48.0196, 66.9237] },
+    { code: 'QA', name: 'Qatar', coords: [25.3548, 51.1839] },
+    { code: 'AE', name: 'United Arab Emirates', coords: [23.4241, 53.8478] },
+    { code: 'OM', name: 'Oman', coords: [21.5126, 55.9233] },
+    { code: 'SA', name: 'Saudi Arabia', coords: [23.8859, 45.0792] },
+    { code: 'IQ', name: 'Iraq', coords: [33.2232, 43.6793] },
+    { code: 'DZ', name: 'Algeria', coords: [28.0339, 1.6596] },
+    { code: 'LY', name: 'Libya', coords: [26.3351, 17.2283] },
+    { code: 'TN', name: 'Tunisia', coords: [33.8869, 9.5375] },
+    { code: 'NG', name: 'Nigeria', coords: [9.0820, 8.6753] },
+    { code: 'GA', name: 'Gabon', coords: [-0.8037, 11.6094] },
+    { code: 'AO', name: 'Angola', coords: [-11.2027, 17.8739] },
+    { code: 'CM', name: 'Cameroon', coords: [7.3697, 12.3547] },
+    { code: 'EG', name: 'Egypt', coords: [26.8206, 30.8025] },
+    { code: 'AZ', name: 'Azerbaijan', coords: [40.1431, 47.5769] },
+    { code: 'GE', name: 'Georgia', coords: [42.3154, 43.3569] },
+    { code: 'TM', name: 'Turkmenistan', coords: [38.9697, 59.5563] },
+    { code: 'GB', name: 'United Kingdom', coords: [55.3781, -3.4360] },
+    { code: 'IN', name: 'India', coords: [20.5937, 78.9629] },
+    { code: 'DE', name: 'Germany', coords: [51.1657, 10.4515] },
+    { code: 'US', name: 'United States', coords: [37.0902, -95.7129] },
+    { code: 'FR', name: 'France', coords: [46.6034, 1.8883] },
+    { code: 'HR', name: 'Croatia', coords: [45.1000, 15.2000] },
+    { code: 'RO', name: 'Romania', coords: [45.9432, 24.9668] },
+    { code: 'NO', name: 'Norway', coords: [60.4720, 8.4689] },
+    { code: 'AR', name: 'Argentina', coords: [-38.4161, -63.6167] },
+    { code: 'BR', name: 'Brazil', coords: [-14.2350, -51.9253] },
+    { code: 'CO', name: 'Colombia', coords: [4.5709, -74.2973] },
+    { code: 'MX', name: 'Mexico', coords: [23.6345, -102.5528] },
+    { code: 'CA', name: 'Canada', coords: [56.1304, -106.3468] },
+    { code: 'CD', name: 'Democratic Republic of the Congo', coords: [-4.0383, 21.7587] },
+    { code: 'SD', name: 'Sudan', coords: [12.8628, 30.2176] },
+    { code: 'IS', name: 'Iceland', coords: [64.9631, -19.0208] },
+    { code: 'IT', name: 'Italy', coords: [41.8719, 12.5674] },
+    { code: 'KW', name: 'Kuwait', coords: [29.3117, 47.4818] },
+    { code: 'TT', name: 'Trinidad and Tobago', coords: [10.6918, -61.2225] },
+    { code: 'MY', name: 'Malaysia', coords: [4.2105, 101.9758] },
+    { code: 'AU', name: 'Australia', coords: [-25.2744, 133.7751] },
+    { code: 'NZ', name: 'New Zealand', coords: [-40.9006, 174.8860] },
+    { code: 'SK', name: 'Slovakia', coords: [48.6690, 19.6990] }
+  ];
+
+  var byCode = {};
+  var markers = {};
+
+  WELLRX_COUNTRIES.forEach(function (c) {
+    byCode[c.code] = c;
+
+    // Non-interactive pulse ring, drawn at the same point as the dot below it.
+    markers[c.code + '__ring'] = {
+      name: '',
+      coords: c.coords,
+      style: {
+        initial: { r: 5, fill: 'transparent', stroke: '#18A098', strokeWidth: 2, strokeOpacity: 0.85 }
+      }
+    };
+    // Static dot marker — tooltip text is just the flag + country name.
+    markers[c.code] = {
+      name: flagOf(c.code) + ' ' + c.name,
+      coords: c.coords
+    };
+  });
+
+  new window.jsVectorMap({
+    map: 'world_merc',
+    selector: '#wellrx-global-map',
+    backgroundColor: 'transparent',
+    draggable: true,
+    zoomButtons: true,
+    zoomOnScroll: false,
+    zoomMin: 1,
+    zoomMax: 6,
+    bindTouchEvents: true,
+    showTooltip: true,
+    regionsSelectable: false,
+    markersSelectable: false,
+
+    regionStyle: {
+      initial: { fill: '#0A1A40', fillOpacity: 1, stroke: '#1E293B', strokeWidth: 0.75 },
+      hover: { fillOpacity: 1, cursor: 'default' }
+    },
+
+    markerStyle: {
+      initial: { r: 5, fill: '#18A098', fillOpacity: 1, stroke: '#0A1A40', strokeWidth: 1.5 },
+      hover: { fill: '#3BE0C4', cursor: 'pointer' }
+    },
+
+    markers: markers,
+
+    // Regions carry no country name in the map data itself, so supply it here —
+    // and suppress the tooltip entirely for countries outside our footprint.
+    onRegionTooltipShow: function (event, tooltip, code) {
+      var country = byCode[code];
+      if (!country) {
+        event.preventDefault();
+        return;
+      }
+      tooltip.text(flagOf(code) + ' ' + country.name);
+    },
+
+    // Flag the target countries' polygons so the CSS above can highlight them.
+    onLoaded: function () {
+      WELLRX_COUNTRIES.forEach(function (c) {
+        var region = mapEl.querySelector('.jvm-region[data-code="' + c.code + '"]');
+        if (region) region.classList.add('wellrx-active-region');
+      });
+    }
+  });
+})();
 </script>
 </body>
 </html>
