@@ -320,6 +320,8 @@ section { padding: 72px 0; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
 .grid-7 { grid-template-columns: repeat(4, 1fr); }
 
 .card {
@@ -352,6 +354,7 @@ section { padding: 72px 0; }
   position: relative;
 }
 .card-media.teal { background: linear-gradient(135deg, var(--c-teal-600), var(--c-navy-800)); }
+.card-media.team-photo { aspect-ratio: 3/4; }
 .card-media img, .tile-media img, .hero-media img, .flip-front img {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
@@ -663,13 +666,13 @@ tr.row-flagship td { background: var(--c-gold-100); }
 @media (max-width: 980px) {
   .global-nav, .header-cta .btn { display: none; }
   .nav-toggle { display: block; }
-  .grid-4, .grid-3, .grid-2, .flip-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-6, .grid-5, .grid-4, .grid-3, .grid-2, .flip-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .two-col { grid-template-columns: 1fr; }
   .logo-strip { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 620px) {
-  .grid-4, .grid-3, .grid-2, .flip-grid, .logo-strip { grid-template-columns: repeat(2, 1fr); }
+  .grid-6, .grid-5, .grid-4, .grid-3, .grid-2, .flip-grid, .logo-strip { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr; }
   section { padding: 52px 0; }
   .hero-inner { padding: 60px 0 48px; }
