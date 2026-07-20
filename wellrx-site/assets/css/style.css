@@ -171,12 +171,31 @@ li { list-style: none; }
 .global-nav a:hover { background: var(--c-bg-alt); color: var(--c-navy-800); }
 .global-nav a.active { color: var(--c-navy-800); background: var(--c-teal-100); }
 
+/* When a subbar follows, bevel the active tab so it visually connects down into it */
+.global-bar:has(+ .subbar) .global-nav a.active {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  clip-path: polygon(6% 0, 94% 0, 100% 25%, 100% 100%, 0 100%, 0 25%);
+}
+.global-bar:has(+ .subbar) .global-nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -19px;
+  width: 9px;
+  height: 9px;
+  background: var(--c-teal-500);
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(45deg);
+}
+
 .header-cta { display: flex; align-items: center; gap: 14px; }
 .header-cta .btn { padding: 10px 20px; font-size: 0.86rem; background: var(--c-navy-800); color: #fff; }
 .header-cta .btn:hover { background: var(--c-navy-900); }
 
 .subbar {
-  border-top: 1px solid var(--c-line-soft);
+  border-top: 1px solid var(--c-teal-300);
   background: var(--c-bg-alt);
   overflow-x: auto;
 }
