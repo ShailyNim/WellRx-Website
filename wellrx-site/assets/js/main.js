@@ -87,4 +87,34 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.key === 'Escape') closeCertModal();
     });
   }
+
+  // News & Updates: category filter tabs
+  var filterBtns = document.querySelectorAll('.news-filter-btn');
+  if (filterBtns.length) {
+    var filterables = document.querySelectorAll('.news-featured, .news-card');
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var cat = btn.getAttribute('data-filter');
+        filterables.forEach(function (el) {
+          el.hidden = cat !== 'all' && el.getAttribute('data-cat') !== cat;
+        });
+      });
+    });
+  }
+
+  // News & Updates: lazy-load YouTube embed on click
+  document.querySelectorAll('.video-embed').forEach(function (embed) {
+    embed.addEventListener('click', function () {
+      var videoId = embed.getAttribute('data-video-id');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1';
+      iframe.title = 'YouTube video player';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      embed.innerHTML = '';
+      embed.appendChild(iframe);
+    });
+  });
 });

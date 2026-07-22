@@ -17,6 +17,7 @@
   --c-gold-600: #a97a1f;
   --c-gold-500: #c99a3d;
   --c-gold-100: #faf1de;
+  --c-navy-100: #e7ebf7;
 
   --c-ink: #0f172a;
   --c-ink-soft: #3d4a63;
@@ -373,6 +374,11 @@ section { padding: 72px 0; }
 }
 .badge-patent { background: var(--c-gold-100); color: var(--c-gold-600); }
 .badge-flagship { background: var(--c-navy-800); color: #fff; }
+.badge-funding { background: var(--c-teal-100); color: var(--c-teal-600); }
+.badge-media { background: var(--c-navy-800); color: #fff; }
+.badge-milestone { background: var(--c-teal-500); color: #fff; }
+.badge-event { background: var(--c-navy-100); color: var(--c-navy-800); }
+.badge-award { background: var(--c-gold-100); color: var(--c-gold-600); }
 .badge-tile {
   position: absolute;
   top: 14px;
@@ -514,6 +520,97 @@ tr.row-flagship td { background: var(--c-gold-100); }
 .ticker-item { display: inline-flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 600; }
 .ticker-item .badge { background: var(--c-teal-500); color: #fff; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.ticker-card { display: inline-flex; align-items: center; gap: 12px; color: #fff; }
+.ticker-thumb {
+  width: 108px; height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--c-teal-600), var(--c-navy-800));
+}
+.ticker-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ticker-title { font-size: 0.86rem; font-weight: 600; }
+
+/* ---------------------------------------------------------------------- */
+/* News & Updates page                                                    */
+/* ---------------------------------------------------------------------- */
+.news-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+.news-filter-btn {
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--c-ink-soft);
+  background: #fff;
+  border: 1.5px solid var(--c-line);
+  border-radius: 100px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.news-filter-btn:hover { border-color: var(--c-teal-300); color: var(--c-navy-800); }
+.news-filter-btn.active { background: var(--c-navy-800); border-color: var(--c-navy-800); color: #fff; }
+
+.news-date { font-size: 0.78rem; font-weight: 700; color: var(--c-ink-soft); letter-spacing: 0.02em; }
+
+.news-grid { display: grid; gap: 22px; grid-template-columns: repeat(3, 1fr); margin-top: 26px; }
+.news-card { display: flex; flex-direction: column; }
+.news-card .badge { margin-bottom: 10px; }
+.news-card .news-date { margin-bottom: 6px; }
+.news-card[hidden] { display: none; }
+
+.card-media.logo-pad { background: #fff; border: 1px solid var(--c-line); }
+.card-media.logo-pad img { object-fit: contain; padding: 22%; }
+
+.news-featured {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-md);
+  padding: 26px;
+  margin-bottom: 26px;
+}
+.news-featured .news-date { margin-bottom: 6px; }
+.news-featured .badge { margin-bottom: 10px; }
+.news-featured h3 { font-size: 1.3rem; }
+.news-featured p { font-size: 0.96rem; }
+.news-featured[hidden] { display: none; }
+
+.video-embed {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--c-navy-950);
+  cursor: pointer;
+}
+.video-embed img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; }
+.video-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+.video-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  background: rgba(14,143,134,0.92);
+  color: #fff;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.video-embed:hover .video-play { background: var(--c-teal-500); transform: translate(-50%, -50%) scale(1.06); }
+
+@media (max-width: 900px) {
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+  .news-featured { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .news-grid { grid-template-columns: 1fr; }
+}
 
 /* ---------------------------------------------------------------------- */
 /* Logo strips                                                            */

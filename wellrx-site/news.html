@@ -57,15 +57,96 @@
 
 <section>
   <div class="container">
-    <div class="grid grid-3">
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Funding</span><h3>Backed by ONGC's Startup India initiative</h3><p>Investment from India's largest E&amp;P operator validates WellRx's downhole technology.</p></div>
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Funding</span><h3>Technology Development Board funds WellRx innovation</h3><p>Central-government backing for indigenous oilfield technology development.</p></div>
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Media</span><h3>WellRx featured on Sansad TV</h3><p>CEO Rahul Gupta — IIT Roorkee, 15+ years across Asia-Pacific, the Middle East and North Africa — on building India's first true downhole equipment startup.</p></div>
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Milestone</span><h3>New manufacturing facility inaugurated</h3><p>Expanded in-house capacity for conventional and specialized downhole equipment at Jhajjar, Haryana.</p></div>
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Event</span><h3>WellRx at industry exhibition</h3><p>Showcasing WellRx's product line to operators and partners. <em>(event name/date needed)</em></p></div>
-      <div class="card"><span class="badge badge-flagship" style="margin-bottom:10px;">Award</span><h3>WellRx receives industry recognition</h3><p><em>(award name and details needed)</em></p></div>
+
+    <div class="news-filters" role="tablist" aria-label="Filter news by category">
+      <button class="news-filter-btn active" data-filter="all">All</button>
+      <button class="news-filter-btn" data-filter="funding">Funding</button>
+      <button class="news-filter-btn" data-filter="media">Media</button>
+      <button class="news-filter-btn" data-filter="milestone">Milestone</button>
+      <button class="news-filter-btn" data-filter="event">Event</button>
+      <button class="news-filter-btn" data-filter="award">Award</button>
     </div>
-    <div class="reconcile-flag">⚠ Exact dates needed for each item — they drive sort order and the homepage ticker's "latest 4."</div>
+
+    <div class="news-featured" id="sansad-tv" data-cat="media">
+      <div class="video-embed" data-video-id="aySExnjD-9g">
+        <img src="https://i.ytimg.com/vi/aySExnjD-9g/sddefault.jpg" alt="WellRx featured on Sansad TV" loading="lazy">
+        <button class="video-play" aria-label="Play video">▶</button>
+      </div>
+      <div>
+        <span class="badge badge-media">Media</span>
+        <div class="news-date">October 2025</div>
+        <h3>WellRx featured on Sansad TV</h3>
+        <p>CEO Rahul Gupta — IIT Roorkee, 15+ years in the oilfield across Asia-Pacific, the Middle East and North Africa — on building India's first true downhole equipment startup.</p>
+      </div>
+    </div>
+
+    <div class="news-grid">
+
+      <div class="news-card card" id="facility-jhajjar" data-cat="milestone">
+        <div class="card-media" style="aspect-ratio:16/10;">Facility — Jhajjar, Haryana</div>
+        <span class="badge badge-milestone">Milestone</span>
+        <div class="news-date">August 2026</div>
+        <h3>WellRx inaugurates new facility at Jhajjar, Haryana</h3>
+        <p>Expanded in-house capacity for conventional and specialized downhole equipment now online at our new Jhajjar, Haryana facility.</p>
+      </div>
+
+      <div class="news-card card" id="oman-show-2025" data-cat="event">
+        <div class="card-media has-photo"><img src="assets/img/News/oman-show-2025-card.jpg" alt="WellRx at Oman Petroleum & Energy Show 2025"></div>
+        <span class="badge badge-event">Event</span>
+        <div class="news-date">May 2025</div>
+        <h3>WellRx at Oman Petroleum &amp; Energy Show 2025</h3>
+        <p>WellRx showcased its downhole product range to operators and partners at the Oman Petroleum &amp; Energy Show 2025.</p>
+      </div>
+
+      <div class="news-card card" id="iew-2025" data-cat="event">
+        <div class="card-media has-photo"><img src="assets/img/News/iew-2025-card.jpg" alt="WellRx launches Wellbore Cleanup and Whipstock at India Energy Week 2025"></div>
+        <span class="badge badge-event">Event</span>
+        <div class="news-date">February 2025</div>
+        <h3>WellRx launches Wellbore Cleanup &amp; Whipstock at India Energy Week 2025</h3>
+        <p>WellRx introduced its Wellbore Cleanup tool range and Whipstock system at India Energy Week 2025, expanding its well-intervention and construction capability.</p>
+      </div>
+
+      <div class="news-card card" id="award-et-2024" data-cat="award">
+        <div class="card-media has-photo"><img src="assets/img/News/award-et-2024-card.jpg" alt="WellRx wins Energy Startup Award 2024 from The Economic Times"></div>
+        <span class="badge badge-award">Award</span>
+        <div class="news-date">March 2024</div>
+        <h3>WellRx wins Energy Startup Award 2024 — The Economic Times</h3>
+        <p>WellRx recognized as Energy Startup of the Year 2024 by The Economic Times, honoring its downhole innovation and in-house manufacturing model.</p>
+      </div>
+
+      <div class="news-card card" id="award-nta-2023" data-cat="award">
+        <div class="card-media has-photo"><img src="assets/img/News/award-national-tech-2023-card.jpg" alt="WellRx receives National Technology Award 2023"></div>
+        <span class="badge badge-award">Award</span>
+        <div class="news-date">May 2023</div>
+        <h3>WellRx receives National Technology Award 2023</h3>
+        <p>WellRx received the National Technology Award 2023 in recognition of its patent-filed downhole engineering.</p>
+      </div>
+
+      <div class="news-card card" id="funding-tdb" data-cat="funding">
+        <div class="card-media has-photo"><img src="assets/img/News/funding-tdb-card.jpg" alt="Technology Development Board of India funds WellRx innovation"></div>
+        <span class="badge badge-funding">Funding</span>
+        <div class="news-date">April 2023</div>
+        <h3>Technology Development Board of India funds WellRx innovation</h3>
+        <p>Central-government backing for indigenous oilfield technology development.</p>
+      </div>
+
+      <div class="news-card card" id="award-bharat-startup-2023" data-cat="award">
+        <div class="card-media has-photo"><img src="assets/img/News/award-bharat-startup-2023-card.jpg" alt="WellRx wins B2B Startup of the Year at the Bharat Startup Awards"></div>
+        <span class="badge badge-award">Award</span>
+        <div class="news-date">January 2023</div>
+        <h3>WellRx wins B2B Startup of the Year — Bharat Startup Awards</h3>
+        <p>WellRx named B2B Startup of the Year at the Bharat Startup Awards, recognizing its in-house downhole manufacturing model.</p>
+      </div>
+
+      <div class="news-card card" id="funding-ongc" data-cat="funding">
+        <div class="card-media has-photo logo-pad"><img src="assets/img/partners/investor-ongc.png" alt="ONGC"></div>
+        <span class="badge badge-funding">Funding</span>
+        <div class="news-date">October 2022</div>
+        <h3>WellRx backed by ONGC's Startup India initiative</h3>
+        <p>Investment from India's largest E&amp;P operator validates WellRx's downhole technology and funds the next phase of in-house manufacturing.</p>
+      </div>
+
+    </div>
   </div>
 </section>
 
